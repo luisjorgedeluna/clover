@@ -2,6 +2,23 @@
 
 This dbt project contains seeds for loans, payments, and quotes data, and creates corresponding PostgreSQL tables with proper data types and KPIs.
 
+## Quick Start with Docker
+
+Run the entire project (database, dbt models, tests, and report generation) with a single command:
+
+```bash
+docker-compose up --build
+```
+
+This will:
+1. Start a PostgreSQL container.
+2. Build the dbt project container.
+3. Run `dbt seed`, `dbt run`, and `dbt test`.
+4. Generate the `kpi_report.html` in your local directory.
+
+**Note for Windows Users:**
+If you encounter errors, ensure you have cloned the repository with LF line endings or that `.gitattributes` is present (it is included in this repo).
+
 ## Project Structure
 
 ```
