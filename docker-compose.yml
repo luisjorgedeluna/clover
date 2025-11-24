@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: clover_user
+      POSTGRES_PASSWORD: clover_password
+      POSTGRES_DB: clover_analytics
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  dbt:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_USER: clover_user
+      DB_PASSWORD: clover_password
+      DB_NAME: clover_analytics
+      DB_PORT: 5432
+    volumes:
+      - ./kpi_report.html:/usr/src/clover_app/kpi_report.html
+      - ./logs:/usr/src/clover_app/logs
+      - ./target:/usr/src/clover_app/target
+
+volumes:
+  postgres_data:

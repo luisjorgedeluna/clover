@@ -1,0 +1,11 @@
+quote_id,created_at,band,system_size_kw,down_payment,system_price,email
+1,2024-01-01,A,5,1000,6000,user1@example.com
+2,2024-01-01,B,8,2000,10000,user2@example.com
+3,2024-01-01,C,10,0,12000,user3@example.com
+4,2024-01-01,A,6,1500,7500,user4@example.com
+5,2024-01-01,B,7,1000,9000,user5@example.com
+6,2024-01-01,C,12,0,15000,user6@example.com
+7,2024-01-01,A,4,500,5000,user7@example.com
+8,2024-01-01,B,9,2000,11000,user8@example.com
+9,2024-01-01,C,11,0,13000,user9@example.com
+10,2024-01-01,A,5,1000,6000,user10@example.com

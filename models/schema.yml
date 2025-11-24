@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: loans
+    description: "Loan information table with loan details, APR, terms, and status"
+    columns:
+      - name: loan_id
+        description: "Primary key - Unique identifier for the loan"
+        tests:
+          - unique
+          - not_null
+      - name: quote_id
+        description: "Reference to the quote that generated this loan"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('quotes')
+              field: quote_id
+      - name: funded_at
+        description: "Date when the loan was funded"
+        tests:
+          - not_null
+      - name: principal
+        description: "Loan principal amount"
+        tests:
+          - not_null
+      - name: apr
+        description: "Annual Percentage Rate"
+        tests:
+          - not_null
+      - name: term_months
+        description: "Loan term in months"
+        tests:
+          - not_null
+      - name: status
+        description: "Loan status (active, defaulted, etc.)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['active', 'defaulted']
+
+  - name: payments
+    description: "Payment records for loans"
+    columns:
+      - name: payment_id
+        description: "Primary key - Unique identifier for the payment"
+        tests:
+          - unique
+          - not_null
+      - name: loan_id
+        description: "Reference to the loan"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('loans')
+              field: loan_id
+      - name: payment_dt
+        description: "Payment date"
+        tests:
+          - not_null
+      - name: amount
+        description: "Payment amount"
+        tests:
+          - not_null
+      - name: status
+        description: "Payment status"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['success', 'failed', 'missed']
+
+  - name: quotes
+    description: "Quote information for solar system installations"
+    columns:
+      - name: quote_id
+        description: "Primary key - Unique identifier for the quote"
+        tests:
+          - unique
+          - not_null
+      - name: created_at
+        description: "Date when the quote was created"
+        tests:
+          - not_null
+      - name: band
+        description: "Quote band classification"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['A', 'B', 'C']
+      - name: system_size_kw
+        description: "Solar system size in kilowatts"
+        tests:
+          - not_null
+      - name: down_payment
+        description: "Down payment amount"
+        tests:
+          - not_null
+      - name: system_price
+        description: "Total system price"
+        tests:
+          - not_null
+      - name: email
+        description: "Customer email address"
+        tests:
+          - not_null
+

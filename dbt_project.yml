@@ -1,0 +1,64 @@
+name: 'clover_analytics'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" to use for this project.
+profile: 'clover_analytics'
+
+# These configurations specify where dbt should look for different types of files.
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Seeds configuration
+seeds:
+  clover_analytics:
+    loans:
+      +alias: _seed_loans
+      +column_types:
+        loan_id: integer
+        quote_id: integer
+        funded_at: date
+        principal: numeric
+        apr: numeric
+        term_months: integer
+        status: varchar
+    payments:
+      +alias: _seed_payments
+      +column_types:
+        payment_id: integer
+        loan_id: integer
+        payment_dt: date
+        amount: numeric
+        status: varchar
+    quotes:
+      +alias: _seed_quotes
+      +column_types:
+        quote_id: integer
+        created_at: date
+        band: varchar
+        system_size_kw: numeric
+        down_payment: numeric
+        system_price: numeric
+        email: varchar
+
+# Models configuration
+models:
+  clover_analytics:
+    loans:
+      +materialized: table
+    payments:
+      +materialized: table
+    quotes:
+      +materialized: table
+    kpi_daily_loans:
+      +materialized: table
+
