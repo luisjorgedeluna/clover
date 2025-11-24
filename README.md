@@ -211,22 +211,47 @@ The project includes three seed files:
 
 ## Querying Tables in PostgreSQL
 
+### Option 1: Local Connection (if psql is installed)
+
 Connect to PostgreSQL:
 ```bash
-psql -h localhost -U clover_user -d clover_analytics
+PGPASSWORD=clover_password psql -h localhost -U clover_user -d clover_analytics
 ```
 
-Example queries:
+### Option 2: Via Docker Container
+
+If you are running the project via Docker, you can access the database inside the container:
+
+1. Find the container ID or name:
+   ```bash
+   docker ps
+   ```
+   (Look for the container named `dbt_project-postgres-1` or similar)
+
+2. Connect to the database:
+   ```bash
+   docker exec -it dbt_project-postgres-1 psql -U clover_user -d clover_analytics
+   ```
+
+### Example Queries
+
+Once connected (via either method), you can run SQL queries:
+
 ```sql
 -- View all loans
-SELECT * FROM loans;
+SELECT * FROM loans LIMIT 5;
 
 -- View KPI table
-SELECT * FROM kpi_daily_loans;
+SELECT * FROM kpi_daily_loans ORDER BY funded_date DESC;
 
--- Disable pager for better experience
+-- Check for volume drops (manual check)
+SELECT * FROM kpi_daily_loans WHERE funded_count <= 2;
+
+-- Disable pager for better experience with wide tables
 \pset pager off
 ```
+
+To exit the psql shell, type `\q`.
 
 ## Troubleshooting
 
