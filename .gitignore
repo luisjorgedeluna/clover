@@ -9,7 +9,7 @@ venv/
 .env
 
 # Generated artifacts
-kpi_report.html
+# kpi_report.html (included in git)
 
 # Docker volumes
 postgres_data/
